@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Firebase config extracted from google-services.json
 const firebaseConfig = {
-  apiKey: 'AIzaSyDf6iFaxNxX9hP08cNpNXvJbt1cNiVEQUQ',
-  authDomain: 'utsp-627a9.firebaseapp.com',
-  databaseURL: 'https://utsp-627a9-default-rtdb.asia-southeast1.firebasedatabase.app',
+  apiKey: 'you_key',
+  authDomain: 'your_domainn',
+  databaseURL: 'your_url',
   projectId: 'utsp-627a9',
   storageBucket: 'utsp-627a9.firebasestorage.app',
   messagingSenderId: '367071405998',
