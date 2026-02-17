@@ -9,13 +9,13 @@
       "client_info": {
         "mobilesdk_app_id": "1:367071405998:android:db7f48b638097b96650a3f",
         "android_client_info": {
-          "package_name": "com.yourname.utspreporter"
+          "package_name": "com.your.your"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDf6iFaxNxX9hP08cNpNXvJbt1cNiVEQUQ"
+          "current_key": "your_key"
         }
       ],
       "services": {
