@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "utsp-reporter",
+    "name": "UTSP Reporter",
     "slug": "utsp-reporter",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,9 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourname.utspreporter"
     },
     "android": {
+      "package": "com.yourname.utspreporter",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-location",
+      "expo-image-picker"
+    ]
   }
 }
+
+
