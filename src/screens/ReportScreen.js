@@ -29,9 +29,17 @@ export default function ReportScreen({ navigation }) {
   const [location, setLocation] = useState(null);
   const [placeName, setPlaceName] = useState('');
   const [estimatedTime, setEstimatedTime] = useState('');
-  const [comment, setComment] = useState('');
+  const [reportType, setReportType] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [locationLoading, setLocationLoading] = useState(false);
+
+  const REPORT_TYPES = [
+    { label: '🚦 Traffic', value: 'Traffic' },
+    { label: '🚨 Accident', value: 'Accident' },
+    { label: '🕳️ Potholes', value: 'Potholes' },
+    { label: '⚠️ Unmarked Speedbreakers', value: 'Unmarked Speedbreakers' },
+  ];
 
   // Request location on mount
   useEffect(() => {
@@ -119,6 +127,10 @@ export default function ReportScreen({ navigation }) {
       Alert.alert('Missing Info', 'Please enter estimated time/delay.');
       return false;
     }
+    if (!reportType) {
+      Alert.alert('Missing Info', 'Please select a report type.');
+      return false;
+    }
     return true;
   };
 
@@ -135,7 +147,7 @@ export default function ReportScreen({ navigation }) {
         longitude: location.longitude,
         placeName: placeName || '',
         estimatedTimeText: estimatedTime.trim(),
-        comment: comment.trim() || '',
+        reportType: reportType || '',
         photoPath: imageUri, // stored on device only
         anonymousUserId: auth.currentUser?.uid || 'anonymous',
         appVersion: APP_VERSION,
@@ -231,17 +243,50 @@ export default function ReportScreen({ navigation }) {
               onChangeText={setEstimatedTime}
             />
 
-            {/* Optional Comment */}
-            <Text style={s.sectionLabel}>💬  Comment (optional)</Text>
-            <TextInput
-              style={[s.input, s.textArea]}
-              placeholder="Any additional notes..."
-              placeholderTextColor="#b0a090"
-              value={comment}
-              onChangeText={setComment}
-              multiline
-              numberOfLines={3}
-            />
+            {/* Report Type Dropdown */}
+            <Text style={s.sectionLabel}>📋  Report Type *</Text>
+            <TouchableOpacity
+              style={[s.dropdownBtn, dropdownOpen && s.dropdownBtnOpen]}
+              onPress={() => setDropdownOpen((prev) => !prev)}
+              activeOpacity={0.8}
+            >
+              <Text style={reportType ? s.dropdownSelected : s.dropdownPlaceholder}>
+                {reportType
+                  ? REPORT_TYPES.find((t) => t.value === reportType)?.label
+                  : 'Select report type...'}
+              </Text>
+              <Text style={s.dropdownArrow}>{dropdownOpen ? '▲' : '▼'}</Text>
+            </TouchableOpacity>
+            {dropdownOpen && (
+              <View style={s.dropdownList}>
+                {REPORT_TYPES.map((item) => (
+                  <TouchableOpacity
+                    key={item.value}
+                    style={[
+                      s.dropdownItem,
+                      reportType === item.value && s.dropdownItemActive,
+                    ]}
+                    onPress={() => {
+                      setReportType(item.value);
+                      setDropdownOpen(false);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text
+                      style={[
+                        s.dropdownItemText,
+                        reportType === item.value && s.dropdownItemTextActive,
+                      ]}
+                    >
+                      {item.label}
+                    </Text>
+                    {reportType === item.value && (
+                      <Text style={s.dropdownCheck}>✓</Text>
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
 
             {/* Submit Button */}
             <TouchableOpacity
@@ -360,6 +405,75 @@ const s = StyleSheet.create({
   textArea: {
     minHeight: 80,
     textAlignVertical: 'top',
+  },
+
+  /* Dropdown */
+  dropdownBtn: {
+    backgroundColor: 'rgba(255,255,255,0.35)',
+    borderRadius: 18,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dropdownBtnOpen: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(232,146,42,0.25)',
+  },
+  dropdownPlaceholder: {
+    fontSize: 15,
+    color: '#b0a090',
+    flex: 1,
+  },
+  dropdownSelected: {
+    fontSize: 15,
+    color: '#1a1a2e',
+    fontWeight: '700',
+    flex: 1,
+  },
+  dropdownArrow: {
+    fontSize: 11,
+    color: '#a09080',
+    marginLeft: 8,
+  },
+  dropdownList: {
+    backgroundColor: 'rgba(255,255,255,0.97)',
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  dropdownItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.05)',
+  },
+  dropdownItemActive: {
+    backgroundColor: 'rgba(232,146,42,0.10)',
+  },
+  dropdownItemText: {
+    fontSize: 15,
+    color: '#1a1a2e',
+    fontWeight: '600',
+  },
+  dropdownItemTextActive: {
+    color: '#E8922A',
+    fontWeight: '800',
+  },
+  dropdownCheck: {
+    fontSize: 16,
+    color: '#E8922A',
+    fontWeight: '800',
   },
 
   /* Submit */

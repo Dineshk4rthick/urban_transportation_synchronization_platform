@@ -58,12 +58,17 @@ export default function ReportsListScreen({ navigation }) {
       <View style={s.cardHeader}>
         <Text style={s.cardTime}>🕐  {formatTimestamp(item.timestamp)}</Text>
       </View>
+      {item.reportType ? (
+        <View style={s.cardBadge}>
+          <Text style={s.cardBadgeText}>{item.reportType}</Text>
+        </View>
+      ) : null}
       <Text style={s.cardDelay}>⏱  {item.estimatedTimeText}</Text>
       <Text style={s.cardLocation}>
         📍  {item.latitude?.toFixed(5)}, {item.longitude?.toFixed(5)}
       </Text>
-      {item.comment ? (
-        <Text style={s.cardComment}>💬  {item.comment}</Text>
+      {item.placeName ? (
+        <Text style={s.cardPlace}>📌  {item.placeName}</Text>
       ) : null}
       <Text style={s.cardMeta}>
         ID: {item.reportId?.slice(0, 8)}... • v{item.appVersion}
@@ -178,7 +183,22 @@ const s = StyleSheet.create({
   cardTime: { fontSize: 12, color: '#a09080', fontWeight: '600' },
   cardDelay: { fontSize: 16, fontWeight: '700', color: '#1a1a2e', marginBottom: 4 },
   cardLocation: { fontSize: 13, color: '#888', marginBottom: 4 },
-  cardComment: { fontSize: 13, color: '#666', fontStyle: 'italic', marginBottom: 4 },
+  cardBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(232,146,42,0.15)',
+    borderRadius: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+    marginBottom: 8,
+  },
+  cardBadgeText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#E8922A',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  cardPlace: { fontSize: 13, color: '#666', fontStyle: 'italic', marginBottom: 4 },
   cardMeta: { fontSize: 11, color: '#bbb', marginTop: 8 },
 
   /* Empty */

@@ -219,7 +219,7 @@ export default function LeaderboardScreen({ navigation }) {
     return () => unsub();
   }, []);
 
-  const listData = leaderboardData.filter((d) => d.rank > 3);
+  const listData = leaderboardData;
 
   return (
     <View style={s.root}>
@@ -270,9 +270,12 @@ export default function LeaderboardScreen({ navigation }) {
           >
             {leaderboardData.length >= 3 && <Podium data={leaderboardData} />}
 
+            {leaderboardData.length > 0 && (
+              <Text style={s.listHeader}>All Rankings</Text>
+            )}
             <View style={s.listWrap}>
               {listData.map((item, i) => (
-                <Row key={item.id} item={item} index={i + 3} />
+                <Row key={item.id} item={item} index={i} />
               ))}
             </View>
           </ScrollView>
@@ -466,6 +469,16 @@ const s = StyleSheet.create({
   },
 
   /* ── List ── */
+  listHeader: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1a1a2e',
+    marginTop: 10,
+    marginBottom: 6,
+    paddingHorizontal: 20,
+    opacity: 0.7,
+    letterSpacing: 0.5,
+  },
   listWrap: { paddingHorizontal: 20 },
   row: {
     flexDirection: 'row',

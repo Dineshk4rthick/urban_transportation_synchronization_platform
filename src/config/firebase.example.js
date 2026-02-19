@@ -1,10 +1,18 @@
+/**
+ * Firebase Configuration Template
+ * ---------------------------------
+ * Copy this file to firebase.js and fill in your own project values.
+ * Get these from: https://console.firebase.google.com
+ *   → Your Project → Project Settings → General → Your apps
+ *
+ * NEVER commit firebase.js with real keys to version control.
+ */
+
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Firebase config — copy firebase.example.js and fill in your own values.
-// NEVER commit your real API keys to version control.
 const firebaseConfig = {
   apiKey:            'YOUR_FIREBASE_API_KEY',
   authDomain:        'YOUR_PROJECT_ID.firebaseapp.com',
